@@ -11,13 +11,15 @@ import Comment from '../Comment';
 import {IPost} from "../Types/models"
 import DoublePressable from "../DoublePressable"
 import Carousel from '../Carousel';
+import VideoPlayer from '../VideoPlayer';
 
 interface IFeedPost {
   post: IPost
+  isVisible: boolean
 }
 
 const FeedPost = (props: IFeedPost) => {
-  const {post} = props
+  const {post, isVisible} = props
   const [isDescription, setIsDescription] = useState(false)
   const [isLike, setIsLike] = useState(false)
 
@@ -44,6 +46,12 @@ const FeedPost = (props: IFeedPost) => {
   } else if (post.images) {
     content = (
       <Carousel images={post.images} onDoublePress={toggleLikeFunction} />
+    )
+  } else if (post.video) {
+    content = (
+      <DoublePressable onDoublePress={toggleLikeFunction}>
+        <VideoPlayer uri={post.video} paused={!isVisible} />
+      </DoublePressable>
     )
   }
 
