@@ -1,6 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import CommentScreen from "./src/screens/CommentScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+import ProfileScreen from "./src/screens/ProfileScreen";
 
 
 const App = () => {
@@ -8,7 +9,8 @@ const App = () => {
   return (
     <View style={styles.app}>
       {/* <HomeScreen /> */}
-      <CommentScreen />
+      {/* <CommentScreen /> */}
+      <ProfileScreen />
     </View>
   )
 };
