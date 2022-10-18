@@ -2,6 +2,7 @@ import {StyleSheet, View} from "react-native";
 import CommentScreen from "./src/screens/CommentScreen";
 import EditProfileScreen from "./src/screens/EditProfileScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+import PostUploadScreen from "./src/screens/PostUploadScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 
 
@@ -12,7 +13,8 @@ const App = () => {
       {/* <HomeScreen /> */}
       {/* <CommentScreen /> */}
       {/* <ProfileScreen /> */}
-      <EditProfileScreen />
+      {/* <EditProfileScreen /> */}
+      <PostUploadScreen />
     </View>
   )
 };
