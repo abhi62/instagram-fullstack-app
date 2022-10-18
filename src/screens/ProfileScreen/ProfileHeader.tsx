@@ -1,18 +1,18 @@
-import {View, Text, Image} from 'react-native'
-import React from 'react'
-import styles from "./styles.profile"
-import user from "../../assets/data/user.json"
-import Button from '../../components/Button'
+import { View, Text, Image } from 'react-native';
+import React from 'react';
+import styles from './styles.profile';
+import user from '../../assets/data/user.json';
+import Button from '../../components/Button';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileHeader = () => {
-  const editProfileHandler = () => {
-
-  }
+  const navigation = useNavigation();
+  const editProfileHandler = () => {};
 
   return (
     <View style={styles.root}>
       <View style={styles.header}>
-        <Image source={{uri: user.image}} style={styles.profileDp} />
+        <Image source={{ uri: user.image }} style={styles.profileDp} />
         <View style={styles.numberContainer}>
           <Text style={styles.numberText}>98</Text>
           <Text>Posts</Text>
@@ -28,13 +28,12 @@ const ProfileHeader = () => {
       </View>
       <Text style={styles.name}>{user.name}</Text>
       <Text style={styles.bio}>{user.bio}</Text>
-      <View style={styles.buttonContainer} >
+      <View style={styles.buttonContainer}>
         <Button text='Edit Profile' onPress={editProfileHandler} />
-        <Button text='Edit Profile' onPress={editProfileHandler} />
+        <Button text='Go Back' onPress={() => navigation.goBack()} />
       </View>
-
     </View>
-  )
-}
+  );
+};
 
-export default ProfileHeader
+export default ProfileHeader;

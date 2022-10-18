@@ -1,37 +1,39 @@
-import {Text, View, Pressable, Image} from 'react-native';
+import { Text, View, Pressable, Image } from 'react-native';
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
-import styles from "./styles.feedPost"
-import {useState} from 'react';
+import styles from './styles.feedPost';
+import { useState } from 'react';
 import Comment from '../Comment';
-import {IPost} from "../Types/models"
-import DoublePressable from "../DoublePressable"
+import { IPost } from '../Types/models';
+import DoublePressable from '../DoublePressable';
 import Carousel from '../Carousel';
 import VideoPlayer from '../VideoPlayer';
+import { useNavigation } from '@react-navigation/native';
 
 interface IFeedPost {
-  post: IPost
-  isVisible: boolean
+  post: IPost;
+  isVisible: boolean;
 }
 
 const FeedPost = (props: IFeedPost) => {
-  const {post, isVisible} = props
-  const [isDescription, setIsDescription] = useState(false)
-  const [isLike, setIsLike] = useState(false)
+  const { post, isVisible } = props;
+  const [isDescription, setIsDescription] = useState(false);
+  const [isLike, setIsLike] = useState(false);
+  const navigation = useNavigation();
 
   const toggleDescriptionFunction = () => {
-    setIsDescription(v => !v) //if u want to update whats already there
+    setIsDescription((v) => !v); //if u want to update whats already there
     // setIsDescription(false) //if u want to override
-  }
+  };
   const toggleLikeFunction = () => {
-    setIsLike(v => !v)
-  }
+    setIsLike((v) => !v);
+  };
 
-  let content = null
+  let content = null;
   if (post.image) {
     content = (
       <DoublePressable onDoublePress={toggleLikeFunction}>
@@ -42,18 +44,22 @@ const FeedPost = (props: IFeedPost) => {
           style={styles.image}
         />
       </DoublePressable>
-    )
+    );
   } else if (post.images) {
     content = (
       <Carousel images={post.images} onDoublePress={toggleLikeFunction} />
-    )
+    );
   } else if (post.video) {
     content = (
       <DoublePressable onDoublePress={toggleLikeFunction}>
         <VideoPlayer uri={post.video} paused={!isVisible} />
       </DoublePressable>
-    )
+    );
   }
+
+  const navigateToUser = () => {
+    navigation.navigate('UserProfile', { userId: post.user.id });
+  };
 
   return (
     <View style={styles.post}>
@@ -65,7 +71,10 @@ const FeedPost = (props: IFeedPost) => {
           }}
           style={styles.userAvatar}
         />
-        <Text style={styles.userName}>{post?.user?.username}</Text>
+
+        <Text onPress={navigateToUser} style={styles.userName}>
+          {post?.user?.username}
+        </Text>
         <Entypo
           name='dots-three-horizontal'
           size={16}
@@ -100,7 +109,7 @@ const FeedPost = (props: IFeedPost) => {
           <Feather
             name='bookmark'
             size={24}
-            style={{marginLeft: 'auto'}}
+            style={{ marginLeft: 'auto' }}
             color={colors.black}
           />
         </View>
@@ -114,10 +123,14 @@ const FeedPost = (props: IFeedPost) => {
           <Text style={styles.bold}>{post?.user?.username} </Text>
           {post.description}
         </Text>
-        <Text onPress={toggleDescriptionFunction}>{isDescription ? 'Less' : 'More'}</Text>
+        <Text onPress={toggleDescriptionFunction}>
+          {isDescription ? 'Less' : 'More'}
+        </Text>
         {/* Post Comment */}
         <Text>View all {post.nofComments} comments</Text>
-        {post?.comments?.map((comment) => <Comment key={comment.id} comment={comment} />)}
+        {post?.comments?.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
 
         {/* posted Date */}
         <Text>{post.createdAt}</Text>
@@ -125,6 +138,5 @@ const FeedPost = (props: IFeedPost) => {
     </View>
   );
 };
-
 
 export default FeedPost;
