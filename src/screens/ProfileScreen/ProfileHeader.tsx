@@ -4,10 +4,13 @@ import styles from './styles.profile';
 import user from '../../assets/data/user.json';
 import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
+import { ProfileNavigationProp } from '../../Navigation/types';
 
 const ProfileHeader = () => {
-  const navigation = useNavigation();
-  const editProfileHandler = () => {};
+  const navigation = useNavigation<ProfileNavigationProp>();
+  const editProfileHandler = () => {
+    navigation.navigate('Edit Profile');
+  };
 
   return (
     <View style={styles.root}>

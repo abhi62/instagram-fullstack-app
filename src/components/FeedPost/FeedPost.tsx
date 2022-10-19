@@ -13,6 +13,7 @@ import DoublePressable from '../DoublePressable';
 import Carousel from '../Carousel';
 import VideoPlayer from '../VideoPlayer';
 import { useNavigation } from '@react-navigation/native';
+import { FeedNavigationProp } from '../../Navigation/types';
 
 interface IFeedPost {
   post: IPost;
@@ -23,7 +24,7 @@ const FeedPost = (props: IFeedPost) => {
   const { post, isVisible } = props;
   const [isDescription, setIsDescription] = useState(false);
   const [isLike, setIsLike] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<FeedNavigationProp>();
 
   const toggleDescriptionFunction = () => {
     setIsDescription((v) => !v); //if u want to update whats already there
@@ -59,6 +60,9 @@ const FeedPost = (props: IFeedPost) => {
 
   const navigateToUser = () => {
     navigation.navigate('UserProfile', { userId: post.user.id });
+  };
+  const navigateToComments = () => {
+    navigation.navigate('Comments', { postId: post.id });
   };
 
   return (
@@ -127,7 +131,9 @@ const FeedPost = (props: IFeedPost) => {
           {isDescription ? 'Less' : 'More'}
         </Text>
         {/* Post Comment */}
-        <Text>View all {post.nofComments} comments</Text>
+        <Text onPress={navigateToComments}>
+          View all {post.nofComments} comments
+        </Text>
         {post?.comments?.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
